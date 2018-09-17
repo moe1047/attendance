@@ -17,7 +17,30 @@ Route::get('/', function () {
     //return $total_time_table_min=Carbon::parse(Carbon::parse('13:00 am')->format('H:i'))->diffInMinutes('12:00 pm');
     //return redirect('admin/dashboard');
 });
+Route::group(
+    [
+        'namespace'  => 'Backpack\Base\app\Http\Controllers',
+        'middleware' => 'web',
+        'prefix'     => config('backpack.base.route_prefix'),
+    ],
+    function () {
 
+        Route::get('dashboard', function () {
+            $this->data['title'] = trans('backpack::base.dashboard'); // set the page title
+            $daily_reports=\App\Helpers\Helper::DailyReport();
+            $date=Carbon::today()->format('Y-m-d');
+            $emails=\App\Models\Email::all()->pluck('email_name','id');
+            if(count($holiday=\App\Models\Holiday::where('from','<=',$date)->where('to','>=',$date)->get()) > 0){
+                $holiday=$holiday->first();
+            }else{
+                $holiday=false;
+            };
+            return view("Dashboard",compact('daily_reports',$this->data,'date','emails','holiday'));
+
+        });
+
+
+    });
 
 Route::group([
     'prefix' => config('backpack.base.route_prefix', 'admin'),
