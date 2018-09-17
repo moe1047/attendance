@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::group(
     [
         'namespace'  => 'Backpack\Base\app\Http\Controllers',
-        'middleware' => 'web',
+        'middleware' => 'admin',
         'prefix'     => config('backpack.base.route_prefix'),
     ],
     function () {
