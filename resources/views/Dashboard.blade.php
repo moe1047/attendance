@@ -88,7 +88,7 @@
                         @foreach($daily_report["date"]["$date"]['shifts'] as $shift)
                             <tr>
                                 <td class="info"><b>{{$shift['start_time']}}</b></td>
-                                <td class="{{$shift['late']>0?'danger':''}}" >{{$shift["clock_in_time"]}}</td>
+                                <td class="{{$shift['late']>0 || Carbon\Carbon::parse($time)->gt($shift['start_time']) ?'danger':''}}" >{{$shift["clock_in_time"]}}</td>
                                 <td>{{$shift['late']}}</td>
                                 <td>{{$shift["clock_out_time"]}}</td>
                                 <td>{{$shift['total_shift_min']}}</td>

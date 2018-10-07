@@ -239,7 +239,8 @@ class Helper
 
     public static function DailyReport($date=null){
         $date==null?$date=Carbon::today()->format('Y-m-d'):$date;
-        $users=UserInfo::all();$reports=array();
+        $users=UserInfo::orderBy('NAME', 'asc')->get();
+        $reports=array();
 
         //if today is holiday
         if(count($holiday=Holiday::where('from','<=',$date)->where('to','>=',$date)->get()) > 0){

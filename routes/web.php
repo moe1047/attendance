@@ -12,10 +12,10 @@
 */
 use Carbon\Carbon;
 Route::get('/', function () {
-    return \App\Department::all();
+    //return \App\Department::all();
     //return \App\Models\Timetable::all();
     //return $total_time_table_min=Carbon::parse(Carbon::parse('13:00 am')->format('H:i'))->diffInMinutes('12:00 pm');
-    //return redirect('admin/dashboard');
+    return redirect('admin/dashboard');
 });
 Route::group(
     [
@@ -26,16 +26,22 @@ Route::group(
     function () {
 
         Route::get('dashboard', function () {
+
             $this->data['title'] = trans('backpack::base.dashboard'); // set the page title
             $daily_reports=\App\Helpers\Helper::DailyReport();
+             $time=Carbon::now()->format('g:i a');
+            // Carbon::parse($time)->gt(Carbon::parse('2:03 pm'))  ? "True":"False";
+
             $date=Carbon::today()->format('Y-m-d');
+
             $emails=\App\Models\Email::all()->pluck('email_name','id');
             if(count($holiday=\App\Models\Holiday::where('from','<=',$date)->where('to','>=',$date)->get()) > 0){
                 $holiday=$holiday->first();
             }else{
                 $holiday=false;
             };
-            return view("Dashboard",compact('daily_reports',$this->data,'date','emails','holiday'));
+
+            return view("Dashboard",compact('daily_reports',$this->data,'date','emails','holiday','time'));
 
         });
 

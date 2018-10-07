@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header">
-                    <i class="fa fa-globe"></i> NOORADIIN, Schools.
+                    <i class="fa fa-globe"></i> Star, Co.
 
                     <small class="pull-right">{{date("Y/m/d")}}</small>
                 </h2>
@@ -84,7 +84,7 @@
                     <table class="table table-bordered">
                         <caption>Payment</caption>
                         <tr>
-                            <th style="width:50%">Basic:</th>
+                            <th style="width:50%">Accumulated Payment:</th>
                             <td>{{number_format($accumulated_amount)}}</td>
                         </tr>
                         <tr>
