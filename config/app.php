@@ -64,7 +64,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Africa/Mogadishu',
+    'customer' => 'Star Co',
 
     /*
     |--------------------------------------------------------------------------

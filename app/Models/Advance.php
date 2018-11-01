@@ -19,7 +19,7 @@ class Advance extends Model
     //protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-     protected $fillable = ['amount','user_id'];
+     protected $fillable = ['amount','user_id','description'];
     // protected $hidden = [];
      protected $dates = ['created_at'];
 

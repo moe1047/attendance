@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header">
-                    <i class="fa fa-globe"></i>Premier Bank.
+                    <i class="fa fa-globe"></i> {{config('app.customer')}}.
 
                     <small class="pull-right">{{date("Y/m/d")}}</small>
                 </h2>
@@ -45,6 +45,9 @@
                                         Day
                                     </th>
                                     <th>
+                                        Advances
+                                    </th>
+                                    <th>
                                         Shift
                                     </th>
                                     <th>
@@ -67,6 +70,13 @@
                                     <tr>
                                         <td rowspan="{{count($report['shifts'])+1}}">{{$date}}</td>
                                         <td rowspan="{{count($report['shifts'])+1}}">{{$report["day"]}}</td>
+                                        <td rowspan="{{count($report['shifts'])+1}}">
+                                          @foreach($report['advances'] as $advance)
+                                            {{$advance->amount}} - {{$advance->description}} </br>
+                                          @endforeach
+
+
+                                        </td>
                                     </tr>
                                     @foreach($report['shifts'] as $shift)
                                         <tr>
@@ -79,13 +89,14 @@
 
                                         </tr>
                                         <?php $total_deduction_amount+=$deduction_amount; ?>
-										<?php $total_late_min+=$shift['late']; ?>
+										                    <?php $total_late_min+=$shift['late']; ?>
                                     @endforeach
                                 @endforeach
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

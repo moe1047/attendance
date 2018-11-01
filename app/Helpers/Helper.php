@@ -58,6 +58,8 @@ class Helper
             $leave1=Leave::where('from','<=',$date)->where('to','>=',$date)->where('userinfo_id','=',$user_id);
             $leave=Leave::where('from','<=',$date)->where('to','>=',$date)->where('userinfo_id','=',$user_id);
             $leave_count=count($leave->get());
+            $advances = Advance::whereDate('created_at',$date)->get();
+            $report["$date"]['advances']  = $advances;
             if(($user_shifts!=null and $holiday_count> 0 and $leave_count ==0 and count($holiday->whereHas('exceptions', function($q) use($user_id){$q->where('USERID', '=', $user_id);})->get()) > 0)
                 or $user_shifts!=null and $holiday_count== 0 and $leave_count ==0
 

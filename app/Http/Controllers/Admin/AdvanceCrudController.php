@@ -40,6 +40,11 @@ class AdvanceCrudController extends CrudController
              'attribute' => 'NAME', // foreign key attribute that is shown to user
              'model' => "App\UserInfo" // foreign key model
          ], 'update/create/both');
+         $this->crud->addField([  // Select2
+             'label' => "Description:",
+             'type' => 'text',
+             'name' => 'description', // the db column for the foreign key
+         ], 'update/create/both');
         // $this->crud->addFields($array_of_arrays, 'update/create/both');
         // $this->crud->removeField('name', 'update/create/both');
         // $this->crud->removeFields($array_of_names, 'update/create/both');
@@ -57,7 +62,8 @@ class AdvanceCrudController extends CrudController
             'label' => "Date:",
             'type' => 'date',
             'name' => 'created_at', // the db column for the foreign key
-        ]); // add a single column, at the end of the stack
+        ]);
+         // add a single column, at the end of the stack
         // $this->crud->addColumns(); // add multiple columns, at the end of the stack
          $this->crud->removeColumn('user_id'); // remove a column from the stack
         // $this->crud->removeColumns(['column_name_1', 'column_name_2']); // remove an array of columns from the stack

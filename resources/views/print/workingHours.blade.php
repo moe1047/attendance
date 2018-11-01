@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header">
-                    <i class="fa fa-globe"></i> Premier Bank.
+                    <i class="fa fa-globe"></i>  {{config('app.customer')}}.
 
                     <small class="pull-right">{{date("Y/m/d")}}</small>
                 </h2>
@@ -53,7 +53,7 @@
                         <th>
                             Friday
                         </th>
-                        
+
                     </tr>
                     </thead>
                     <tbody>
@@ -84,7 +84,7 @@
                             <td>
                                 {{round($report["fri"]["mins"]/60,2)}}
                             </td>
-                            
+
 
 
 

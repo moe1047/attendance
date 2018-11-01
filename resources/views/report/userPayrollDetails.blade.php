@@ -123,8 +123,12 @@
                                             <th>
                                                 Date
                                             </th>
+
                                             <th>
                                                 Day
+                                            </th>
+                                            <th>
+                                                Advances
                                             </th>
                                             <th>
                                                 Shift In
@@ -150,6 +154,7 @@
                                             <th>
                                                 deduction Amount
                                             </th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -158,6 +163,13 @@
                                         <tr>
                                             <td rowspan="{{count($report['shifts'])+1}}">{{$date}}</td>
                                             <td rowspan="{{count($report['shifts'])+1}}">{{$report["day"]}}</td>
+                                            <td rowspan="{{count($report['shifts'])+1}}">
+                                              @foreach($report['advances'] as $advance)
+                                                {{$advance->amount}} - {{$advance->description}} </br>
+                                              @endforeach
+                                            
+
+                                            </td>
                                         </tr>
                                         @foreach($report['shifts'] as $shift)
                                             <tr>
@@ -289,4 +301,3 @@
     </script>
 
 @stop
-

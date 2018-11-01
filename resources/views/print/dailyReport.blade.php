@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header">
-                    <i class="fa fa-globe"></i> Premier Bank.
+                    <i class="fa fa-globe"></i> {{config('app.customer')}}.
 
                     <small class="pull-right">{{date("d/m/Y")}}</small>
                 </h2>
@@ -33,7 +33,7 @@
                             <th>In</th>
                             <th>Late(min)</th>
                             <th>Out</th>
-                           
+
 
 
                         </tr>
@@ -51,7 +51,7 @@
                                     <td class="{{$shift['late']>0?'danger':''}}" >{{$shift["clock_in_time"]}}</td>
                                     <td>{{$shift['late']}}</td>
                                     <td>{{$shift["clock_out_time"]}}</td>
-                                    
+
 
 
 
