@@ -27,8 +27,8 @@
 
 </style>
 <div style="overflow-x:auto;">
-    <?php $deduction_amount=0;$total_deduction_amount=0;
-    ?>
+  <?php $deduction_amount=0;$total_deduction_amount=0;$total_late_min=0;$total_working_day=0;$total_worked_day=0;
+  ?>
     <table class="" id="datatable" align="center">
         <thead>
         <tr>
@@ -90,19 +90,25 @@
                 </tr>
                 <?php $total_deduction_amount+=$deduction_amount; ?>
             @endforeach
+            <?php $total_working_day+=$report['working_day']; ?>
+            <?php $total_worked_day+=$report['worked_day']; ?>
         @endforeach
 
         </tbody>
         <tfoot>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>TOTAL:</td>
-            <td>{{number_format($total_deduction_amount)}}</td>
-        </tr>
+          <tr>
+
+              <td><strong>TOTAL WORKING DAYS</strong></td>
+              <td>{{$total_working_day}}</td>
+              <td><strong>TOTAL WORKED DAYS</strong></td>
+              <td>{{$total_worked_day}}</td>
+              <td><strong>TOTAL ABSENT DAYS:</strong></td>
+              <td>{{$total_working_day - $total_worked_day}}</td>
+              <td><strong>TOTAL Late:</strong></td>
+              <td>{{$total_late_min}}</td>
+              <td><strong>TOTAL DEDUCTION:</strong></td>
+              <td>{{number_format($total_deduction_amount, 2, '.', ',')}}</td>
+          </tr>
         </tfoot>
     </table>
 </div>

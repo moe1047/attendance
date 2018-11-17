@@ -252,7 +252,7 @@ class ReportController extends Controller
             $leave_count=count($leave->get());
             $holiday=Holiday::where('from','<=',$date)->where('to','>=',$date);
             $holiday_count=count($holiday->get());
-            
+
             if(($user_shifts!=null and $holiday_count> 0 and $leave_count ==0 and count($holiday->whereHas('exceptions', function($q) use($user_id){$q->where('USERID', '=', $user_id);})->get()) > 0)
                 or $user_shifts!=null and $holiday_count== 0 and $leave_count ==0
 

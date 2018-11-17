@@ -31,81 +31,100 @@
                 <div class="">
                     <!-- /.box-header -->
                     <div class="">
-                        <?php $deduction_amount=0;$total_deduction_amount=0;$total_late_min=0;
-                        ?>
+                      <?php $deduction_amount=0;$total_deduction_amount=0;$total_late_min=0;$total_working_day=0;$total_worked_day=0;
+                      ?>
 
                         @if(isset($reports))
                             <table class="table table-bordered " id="datatable">
                                 <thead>
-                                <tr>
-                                    <th>
-                                        Date
-                                    </th>
-                                    <th>
-                                        Day
-                                    </th>
-                                    <th>
-                                        Advances
-                                    </th>
-                                    <th>
-                                        Shift
-                                    </th>
-                                    <th>
-                                        Clocked IN
-                                    </th>
-                                    <th>
-                                        Late(mins)
-                                    </th>
-                                    <th>
-                                        Paid Rate
-                                    </th>
-                                    <th>
-                                        deduction Amount
-                                    </th>
-                                </tr>
+                                  <tr>
+                                      <th>
+                                          Date
+                                      </th>
+
+                                      <th>
+                                          Day
+                                      </th>
+                                      <th>
+                                          Advances
+                                      </th>
+                                      <th>
+                                          Shift In
+                                      </th>
+                                      <th>
+                                          Clocked IN
+                                      </th>
+                                      <th>
+                                          Shift out
+                                      </th>
+                                      <th>
+                                          Clocked OUT
+                                      </th>
+                                      <th>
+                                          Late(mins)
+                                      </th>
+                                      <th>
+                                          Total Shift(mins)
+                                      </th>
+                                      <th>
+                                          Paid Rate
+                                      </th>
+                                      <th>
+                                          deduction Amount
+                                      </th>
+
+                                  </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($reports as $date=>$report)
 
-                                    <tr>
-                                        <td rowspan="{{count($report['shifts'])+1}}">{{$date}}</td>
-                                        <td rowspan="{{count($report['shifts'])+1}}">{{$report["day"]}}</td>
-                                        <td rowspan="{{count($report['shifts'])+1}}">
-                                          @foreach($report['advances'] as $advance)
-                                            {{$advance->amount}} - {{$advance->description}} </br>
-                                          @endforeach
-
-
-                                        </td>
-                                    </tr>
-                                    @foreach($report['shifts'] as $shift)
-                                        <tr>
-                                            <td>{{$shift['start_time']}}</td>
-                                            <td>{{$shift["clock_in_time"]}}</td>
-                                            <td>{{$shift['late']}}</td>
-                                            <td>{{$rate_per_min=$report["total_min"]==0?$day_rate:(round($day_rate/$report["total_min"],4))}}</td>
-
-                                            <td>{{$shift["clock_in_time"]==0?number_format($deduction_amount=($rate_per_min*$shift['late'])+($rate_per_min*$shift['total_shift_min']), 2, '.', ','):number_format($deduction_amount=$rate_per_min*$shift['late'], 2, '.', ',')}}</td>
-
-                                        </tr>
-                                        <?php $total_deduction_amount+=$deduction_amount; ?>
-										                    <?php $total_late_min+=$shift['late']; ?>
-                                    @endforeach
-                                @endforeach
-
-                                </tbody>
-                                <tfoot>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>TOTAL Late</td>
+                                    <td rowspan="{{count($report['shifts'])+1}}">{{$date}}</td>
+                                    <td rowspan="{{count($report['shifts'])+1}}">{{$report["day"]}}</td>
+                                    <td rowspan="{{count($report['shifts'])+1}}">
+                                      @foreach($report['advances'] as $advance)
+                                        {{$advance->amount}} - {{$advance->description}} </br>
+                                      @endforeach
+
+
+                                    </td>
+                                </tr>
+                                @foreach($report['shifts'] as $shift)
+                                    <tr>
+                                        <td><b>{{$shift['start_time']}}</b></td>
+                                        <td>{{$shift["clock_in_time"]}}</td>
+                                        <td><b>{{$shift['end_time']}}</b></td>
+                                        <td>{{$shift["clock_out_time"]}}</td>
+                                        <td>{{$shift['late']}}</td>
+                                        <td>{{$shift['total_shift_min']}}</td>
+                                        <td>{{$rate_per_min=$report["total_min"]==0?$day_rate:(round($day_rate/$report["total_min"],4))}}</td>
+
+                                        <td>{{$shift["clock_in_time"]==0?number_format($deduction_amount=($rate_per_min*$shift['late'])+($rate_per_min*$shift['total_shift_min']), 2, '.', ','):number_format($deduction_amount=$rate_per_min*$shift['late'], 2, '.', ',')}}</td>
+
+                                    </tr>
+                                    <?php $total_deduction_amount+=$deduction_amount; ?>
+                                    <?php $total_late_min+=$shift['late']; ?>
+
+                                @endforeach
+                                <?php $total_working_day+=$report['working_day']; ?>
+                                <?php $total_worked_day+=$report['worked_day']; ?>
+                                @endforeach
+                                <tr>
+
+                                    <td><strong>TOTAL WORKING DAYS</strong></td>
+                                    <td>{{$total_working_day}}</td>
+                                    <td><strong>TOTAL WORKED DAYS</strong></td>
+                                    <td>{{$total_worked_day}}</td>
+                                    <td><strong>TOTAL ABSENT DAYS:</strong></td>
+                                    <td>{{$total_working_day - $total_worked_day}}</td>
+                                    <td><strong>TOTAL Late:</strong></td>
                                     <td>{{$total_late_min}}</td>
-                                    <td>TOTAL:</td>
+                                    <td><strong>TOTAL DEDUCTION:</strong></td>
                                     <td>{{number_format($total_deduction_amount, 2, '.', ',')}}</td>
                                 </tr>
-                                </tfoot>
+
+                                </tbody>
+                              
                             </table>
                         @endif
 

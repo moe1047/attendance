@@ -113,7 +113,7 @@
                         <div class="box">
                             <!-- /.box-header -->
                             <div class="box-body table-responsive">
-                                <?php $deduction_amount=0;$total_deduction_amount=0;$total_late_min=0;
+                                <?php $deduction_amount=0;$total_deduction_amount=0;$total_late_min=0;$total_working_day=0;$total_worked_day=0;
                                 ?>
 
                                 @if(isset($reports))
@@ -167,7 +167,7 @@
                                               @foreach($report['advances'] as $advance)
                                                 {{$advance->amount}} - {{$advance->description}} </br>
                                               @endforeach
-                                            
+
 
                                             </td>
                                         </tr>
@@ -178,27 +178,33 @@
                                                 <td><b>{{$shift['end_time']}}</b></td>
                                                 <td>{{$shift["clock_out_time"]}}</td>
                                                 <td>{{$shift['late']}}</td>
-												<td>{{$shift['total_shift_min']}}</td>
+												                        <td>{{$shift['total_shift_min']}}</td>
                                                 <td>{{$rate_per_min=$report["total_min"]==0?$day_rate:(round($day_rate/$report["total_min"],4))}}</td>
 
                                                 <td>{{$shift["clock_in_time"]==0?number_format($deduction_amount=($rate_per_min*$shift['late'])+($rate_per_min*$shift['total_shift_min']), 2, '.', ','):number_format($deduction_amount=$rate_per_min*$shift['late'], 2, '.', ',')}}</td>
 
                                             </tr>
                                             <?php $total_deduction_amount+=$deduction_amount; ?>
-											<?php $total_late_min+=$shift['late']; ?>
+											                      <?php $total_late_min+=$shift['late']; ?>
+
                                         @endforeach
+                                        <?php $total_working_day+=$report['working_day']; ?>
+                                        <?php $total_worked_day+=$report['worked_day']; ?>
                                         @endforeach
 
                                         </tbody>
                                         <tfoot>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>TOTAL Late:</td>
+                                            
+                                            <td><strong>TOTAL WORKING DAYS</strong></td>
+                                            <td>{{$total_working_day}}</td>
+                                            <td><strong>TOTAL WORKED DAYS</strong></td>
+                                            <td>{{$total_worked_day}}</td>
+                                            <td><strong>TOTAL ABSENT DAYS:</strong></td>
+                                            <td>{{$total_working_day - $total_worked_day}}</td>
+                                            <td><strong>TOTAL Late:</strong></td>
                                             <td>{{$total_late_min}}</td>
-                                            <td>TOTAL:</td>
+                                            <td><strong>TOTAL DEDUCTION:</strong></td>
                                             <td>{{number_format($total_deduction_amount, 2, '.', ',')}}</td>
                                         </tr>
                                         </tfoot>
