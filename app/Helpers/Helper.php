@@ -178,7 +178,7 @@ class Helper
             if(Carbon::parse($attendance->CHECKTIME)->format('Y-m-d') ==$date){
                 /*** convert attendance datetime to only time (to compare) */
                 $check_time=Carbon::parse($attendance->CHECKTIME->format('H:i:s'));
-                if($check_time->between($start_clock_in, $end_clock_in)){
+                if($check_time->between($start_clock_in, $end_clock_in) and $attendance->CHECKTYPE=="I"){
                     if($attendance->CHECKTYPE=="I" and $attendance->CHECKTIME < $clock_in_time or $clock_in_time==null)
                         $clock_in_time=$attendance->CHECKTIME->format('H:i:s');
                 }
@@ -222,6 +222,7 @@ class Helper
         if($clock_out_time!=null){
             $time_table_report['clock_out_time']=Carbon::parse($clock_out_time)->format('g:i a');
             //$time_table_report['total_min']=$total_time_table_min;
+            $clock_out_time=Carbon::parse($clock_in_time);
             if($clock_out_time->between($end_time_with_early,$end_clock_out)){
                 $time_table_report['early']=$clock_out_time->diffInMinutes($end_time_with_early);
                 $time_table_report['total_worked_min']=$total_time_table_min-$time_table_report['early'];
