@@ -178,7 +178,7 @@ class Helper
             if(Carbon::parse($attendance->CHECKTIME)->format('Y-m-d') ==$date){
                 /*** convert attendance datetime to only time (to compare) */
                 $check_time=Carbon::parse($attendance->CHECKTIME->format('H:i:s'));
-                if($check_time->between($start_clock_in, $end_clock_in) and $attendance->CHECKTYPE=="I"){
+                if($check_time->between($start_clock_in, $end_clock_in)){
                     if($attendance->CHECKTYPE=="I" and $attendance->CHECKTIME < $clock_in_time or $clock_in_time==null)
                         $clock_in_time=$attendance->CHECKTIME->format('H:i:s');
                 }
