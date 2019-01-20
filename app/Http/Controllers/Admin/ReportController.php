@@ -269,7 +269,7 @@ class ReportController extends Controller
                     foreach($user_shifts as $user_shift){
 
                         /*** get this timetable attendance and filter it */
-                        $time_table_report=$this->getTimeTableAttendance($user_id,$date,$user_shift->timetable);
+                        $time_table_report=Helper::getTimeTableAttendance($user_id,$date,$user_shift->timetable);
 
                         /*** if user was present in the timetable */
                         if($time_table_report['present']==1 and $present==0)
@@ -322,7 +322,7 @@ class ReportController extends Controller
         return $report;
 
     }
-    
+
 
     public function paySlip(Request $request){
         $phone=0;

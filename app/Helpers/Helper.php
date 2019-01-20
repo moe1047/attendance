@@ -222,7 +222,7 @@ class Helper
         if($clock_out_time!=null){
             $time_table_report['clock_out_time']=Carbon::parse($clock_out_time)->format('g:i a');
             //$time_table_report['total_min']=$total_time_table_min;
-            $clock_out_time=Carbon::parse($clock_in_time);
+            $clock_out_time=Carbon::parse($clock_out_time);
             if($clock_out_time->between($end_time_with_early,$end_clock_out)){
                 $time_table_report['early']=$clock_out_time->diffInMinutes($end_time_with_early);
                 $time_table_report['total_worked_min']=$total_time_table_min-$time_table_report['early'];
